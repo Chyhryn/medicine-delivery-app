@@ -1,17 +1,17 @@
 import { Stack } from "@mui/material";
 import { ShoppingCartItem } from "./shoppingCartItem/ShoppingCartItem";
-import { useState } from "react";
-import { products } from "../../constants/products";
+import { useSelector } from "react-redux";
+import { getOrderData } from "../../redux/selectors";
 
 export const ShoppingCartList = () => {
-const [cartProducts, setCartProducts] = useState(products.slice(0, 5));
-
-const onDeleteHandler = (id) => {
-  const updatedCartProducts = cartProducts.filter(
-    (product) => product.id !== id
-  );
-  setCartProducts(updatedCartProducts);
-};
+  // const [cartProducts, setCartProducts] = useState(products.slice(0, 5));
+  const shoppingCartData = useSelector(getOrderData);
+  // const onDeleteHandler = (id) => {
+  //   const updatedCartProducts = cartProducts.filter(
+  //     (product) => product.id !== id
+  //   );
+  //   setCartProducts(updatedCartProducts);
+  // };
 
   return (
     <Stack
@@ -25,14 +25,8 @@ const onDeleteHandler = (id) => {
         borderColor: "primary.dark",
       }}
     >
-      {cartProducts.map((product) => {
-        return (
-          <ShoppingCartItem
-            key={product.id}
-            product={product}
-            onDeleteHandler={onDeleteHandler}
-          />
-        );
+      {shoppingCartData.map((product) => {
+        return <ShoppingCartItem key={product.id} product={product} />;
       })}
     </Stack>
   );

@@ -9,6 +9,11 @@ import {
 } from "@mui/material";
 import { useState } from "react";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
+import {
+  changeProductQuantity,
+  deleteProductFromCart,
+} from "../../../redux/orderSlice";
+import { useDispatch } from "react-redux";
 
 const ProductImgWrapperSX = {
   display: "flex",
@@ -18,14 +23,20 @@ const ProductImgWrapperSX = {
 
 const ProductImgSX = { width: "100%", height: "auto", objectFit: "contain" };
 
-export const ShoppingCartItem = ({ product, onDeleteHandler }) => {
-  const [quantity, setQuantity] = useState(1);
+export const ShoppingCartItem = ({ product }) => {
+  const [quantity, setQuantity] = useState(product.quantity);
+  const dispatch = useDispatch();
+
+  const onDeleteHandler = (id) => {
+    dispatch(deleteProductFromCart(id));
+  };
 
   const onChangeQuantityHandler = (event) => {
     const newValue = event.currentTarget.value;
     if (newValue <= 0) {
       onDeleteHandler(product.id);
     } else {
+      dispatch(changeProductQuantity({ id: product.id, quantity: newValue }));
       setQuantity(newValue);
     }
   };

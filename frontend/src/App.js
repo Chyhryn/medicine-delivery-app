@@ -6,6 +6,7 @@ import { ThemeProvider } from "@mui/material/styles";
 import { customTheme } from "./theme/customTheme";
 import CssBaseline from "@mui/material/CssBaseline";
 
+
 export const App = () => {
   return (
     <ThemeProvider theme={customTheme}>

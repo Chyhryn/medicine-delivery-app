@@ -1,4 +1,6 @@
 import { Box, ListItem, Typography, Paper, Button } from "@mui/material";
+import { useDispatch } from "react-redux";
+import { addProductToCart } from "../../../redux/orderSlice";
 
 const ProductItemSX = {
   width: {
@@ -20,8 +22,10 @@ const ProductImgWrapperSX = {
 const ProductImgSX = { width: "100%", height: "auto", objectFit: "contain" };
 
 export const ProductItem = ({ product }) => {
-  const onClickHandler = (id) => {
-    console.log(id);
+  const dispatch = useDispatch();
+  const onClickHandler = (productData) => {
+    dispatch(addProductToCart({ ...productData, quantity: 1 }));
+    console.log("productData: ", productData);
   };
 
   return (
@@ -52,7 +56,7 @@ export const ProductItem = ({ product }) => {
         <Button
           variant="contained"
           sx={{ width: "100%" }}
-          onClick={() => onClickHandler(product.id)}
+          onClick={() => onClickHandler(product)}
         >
           Add to cart
         </Button>
